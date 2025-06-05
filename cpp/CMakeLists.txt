@@ -7,6 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(OpenFrontPrototype src/main.cpp)
+add_executable(OpenFrontPrototype
+    src/main.cpp
+    src/Army.cpp
+    src/Pathfinder.cpp
+    src/MapLoader.cpp
+)
+
 
 target_link_libraries(OpenFrontPrototype SDL2::SDL2)

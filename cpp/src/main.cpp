@@ -1,49 +1,12 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-#include "Province.h"
-#include "Army.h"
-#include "Pathfinder.h"
-#include "MapLoader.h"
-#include <vector>
-#include <cmath>
+        provinces = loadMap("../maps/gigantic.map");
 
-
-int main(int argc, char* argv[]) {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
-        return 1;
-    }
-
-    ProvinceGrid provinces;
-    try {
-        provinces = loadMap("../maps/highdensity.map");
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    const int tileSize = 8;
-    int windowWidth = provinces[0].size() * tileSize;
-    int windowHeight = provinces.size() * tileSize;
-
-    SDL_Window* win = SDL_CreateWindow("OpenFront Prototype", 100, 100, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
-    if (!win) {
-
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!ren) {
-
-
-
-        SDL_DestroyWindow(win);
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
+                    case SDLK_SPACE:
+                        // space reserved for future path commands
+                            // no enemies in this demo
+        // no enemy movement in this demo
         return 1;
     }
 

@@ -13,14 +13,12 @@ cmake ..
 make
 ```
 
-
-The resulting executable `OpenFrontPrototype` opens a demo window and draws a
-province grid from `maps/highdensity.map`. This map contains 100×75 provinces
-for a much denser play field. Each character in the file represents a terrain
-type (`P` plains, `F` forest, `M` mountain, `W` water).
-
-
-Run the prototype from the `build` directory:
+province grid from `maps/gigantic.map`. This map contains 200×150 provinces
+for an extremely dense play field. Each character in the file represents a terrain
+One player army starts on the map. **Left click** it to select it and **right
+click** an adjacent province to move. Capturing a new province lowers your
+infantry count by one. There are no enemies in this demo—expand across the
+gigantic map at your leisure.
 
 ```bash
 ./OpenFrontPrototype

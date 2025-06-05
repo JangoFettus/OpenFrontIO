@@ -1,11 +1,13 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+
 #include "Province.h"
 #include "Army.h"
 #include "Pathfinder.h"
 #include "MapLoader.h"
 #include <vector>
 #include <cmath>
+
 
 int main(int argc, char* argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -28,6 +30,7 @@ int main(int argc, char* argv[]) {
 
     SDL_Window* win = SDL_CreateWindow("OpenFront Prototype", 100, 100, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
     if (!win) {
+
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return 1;
@@ -35,6 +38,9 @@ int main(int argc, char* argv[]) {
 
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!ren) {
+
+
+
         SDL_DestroyWindow(win);
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -56,6 +62,7 @@ int main(int argc, char* argv[]) {
 
     size_t selectedArmy = 0; // index into playerArmies
 
+
     Army enemy;
     enemy.id = 2;
     enemy.units = {80, 5, 0};
@@ -63,7 +70,13 @@ int main(int argc, char* argv[]) {
     enemy.setPath(findPath(provinces, enemy.location->x, enemy.location->y,
                            playerArmies[selectedArmy].location->x, playerArmies[selectedArmy].location->y));
 
-    // tileSize defined earlier
+
+    enemy.moveTo(&provinces[4][4]);
+    enemy.setPath(findPath(provinces, enemy.location->x, enemy.location->y,
+                           player.location->x, player.location->y));
+
+    const int tileSize = 32;
+
 
     auto drawMap = [&]() {
         SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
@@ -81,6 +94,8 @@ int main(int argc, char* argv[]) {
                 SDL_Rect r{static_cast<int>(x) * tileSize, static_cast<int>(y) * tileSize, tileSize, tileSize};
                 SDL_RenderFillRect(ren, &r);
                 if (p.owner == 1) {
+
+
                     SDL_SetRenderDrawColor(ren, 220, 20, 60, 100);
                     SDL_RenderFillRect(ren, &r);
                 } else if (p.owner == enemy.id) {
@@ -107,6 +122,7 @@ int main(int argc, char* argv[]) {
                 SDL_RenderDrawRect(ren, &pRect);
                 SDL_SetRenderDrawColor(ren, 220, 20, 60, 255);
             }
+
         }
         SDL_RenderPresent(ren);
     };
@@ -119,6 +135,7 @@ int main(int argc, char* argv[]) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
                 quit = true;
+
             } else if (e.type == SDL_KEYDOWN && player.active) {
                 int dx = 0, dy = 0;
                 switch (e.key.keysym.sym) {
@@ -142,11 +159,13 @@ int main(int argc, char* argv[]) {
                     if (newX >= 0 && newX < w && newY >= 0 && newY < h) {
                         Province& dest = provinces[newY][newX];
                         if (dest.terrain != TerrainType::Water) {
+
                             bool captured = dest.owner != player.id;
                             player.moveTo(&dest);
                             if (captured && player.units.infantry > 0) {
                                 --player.units.infantry;
                             }
+
                             if (enemy.active && enemy.location == &dest) {
                                 player.resolveCombat(enemy);
                             }
@@ -192,6 +211,7 @@ int main(int argc, char* argv[]) {
         for (auto& a : playerArmies) {
             a.update();
         }
+
         enemy.update();
         if (!enemy.isMoving && enemy.active && player.active) {
             auto path = findPath(provinces, enemy.location->x, enemy.location->y,
@@ -203,6 +223,7 @@ int main(int argc, char* argv[]) {
         }
         drawMap();
         SDL_Delay(100);
+
     }
 
     SDL_DestroyRenderer(ren);

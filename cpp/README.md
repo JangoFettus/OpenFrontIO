@@ -13,10 +13,12 @@ cmake ..
 make
 ```
 
+
 The resulting executable `OpenFrontPrototype` opens a demo window and draws a
 province grid from `maps/highdensity.map`. This map contains 100×75 provinces
 for a much denser play field. Each character in the file represents a terrain
 type (`P` plains, `F` forest, `M` mountain, `W` water).
+
 
 Run the prototype from the `build` directory:
 
@@ -30,3 +32,4 @@ Capturing a new province lowers that army’s infantry count by one. Press the
 space bar to generate a path from the selected army to the blue enemy army and
 watch it advance automatically. The enemy still chases the closest active
 player army each tick.
+

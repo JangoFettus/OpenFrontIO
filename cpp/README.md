@@ -28,3 +28,4 @@ enter become owned by the player and are tinted red. Press the space bar to
 generate a path to the blue enemy army and watch your units move automatically.
 The enemy now has a simple AI: if it is active, it will plot a path towards the
 player and chase them each tick.
+

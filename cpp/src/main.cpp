@@ -1,10 +1,12 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+
 #include "Province.h"
 #include "Army.h"
 #include "Pathfinder.h"
 #include "MapLoader.h"
 #include <vector>
+
 
 int main(int argc, char* argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -13,19 +15,27 @@ int main(int argc, char* argv[]) {
     }
 
     SDL_Window* win = SDL_CreateWindow("OpenFront Prototype", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
+
     if (!win) {
+=======
+
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return 1;
     }
 
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
     if (!ren) {
+
+
+
         SDL_DestroyWindow(win);
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return 1;
     }
+
 
     ProvinceGrid provinces;
     try {
@@ -94,10 +104,12 @@ int main(int argc, char* argv[]) {
     bool quit = false;
     SDL_Event e;
     drawMap();
+
     while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
                 quit = true;
+
             } else if (e.type == SDL_KEYDOWN && player.active) {
                 int dx = 0, dy = 0;
                 switch (e.key.keysym.sym) {
@@ -143,6 +155,7 @@ int main(int argc, char* argv[]) {
         }
         drawMap();
         SDL_Delay(100);
+
     }
 
     SDL_DestroyRenderer(ren);

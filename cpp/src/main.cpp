@@ -15,6 +15,7 @@ int main(int argc, char* argv[]) {
     const int windowWidth = 800;
     const int windowHeight = 600;
 
+
     SDL_Window* win = SDL_CreateWindow("OpenFront Prototype", 100, 100,
                                        windowWidth, windowHeight, SDL_WINDOW_SHOWN);
     if (!win) {
@@ -34,6 +35,7 @@ int main(int argc, char* argv[]) {
 
     MapView view(map, windowWidth, windowHeight, 2);
     view.render(ren);
+
 
     bool quit = false;
     SDL_Event e;
@@ -66,6 +68,7 @@ int main(int argc, char* argv[]) {
             }
         }
         view.render(ren);
+
         SDL_Delay(16);
     }
 

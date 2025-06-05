@@ -14,6 +14,7 @@ add_executable(OpenFrontPrototype
     src/MapLoader.cpp
     src/GameMap.cpp
     src/GameMapLoader.cpp
+    src/MapView.cpp
 )
 
 

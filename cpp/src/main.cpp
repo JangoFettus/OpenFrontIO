@@ -2,6 +2,7 @@
 #include <iostream>
 #include "GameMap.h"
 #include "GameMapLoader.h"
+#include "MapView.h"
 
 int main(int argc, char* argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -11,9 +12,8 @@ int main(int argc, char* argv[]) {
 
     GameMap map = GameMap::loadFromBin("../resources/maps/PangaeaMini.bin");
 
-    const int tileSize = 2;
-    int windowWidth = map.width() * tileSize;
-    int windowHeight = map.height() * tileSize;
+    const int windowWidth = 800;
+    const int windowHeight = 600;
 
     SDL_Window* win = SDL_CreateWindow("OpenFront Prototype", 100, 100,
                                        windowWidth, windowHeight, SDL_WINDOW_SHOWN);
@@ -32,45 +32,40 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    auto drawMap = [&]() {
-        SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
-        SDL_RenderClear(ren);
-        int total = map.width() * map.height();
-        for (int r = 0; r < total; ++r) {
-            switch (map.terrainType(r)) {
-                case TerrainType::Plains:
-                    SDL_SetRenderDrawColor(ren, 136, 192, 80, 255);
-                    break;
-                case TerrainType::Highland:
-                    SDL_SetRenderDrawColor(ren, 160, 160, 80, 255);
-                    break;
-                case TerrainType::Mountain:
-                    SDL_SetRenderDrawColor(ren, 200, 200, 200, 255);
-                    break;
-                case TerrainType::Lake:
-                    SDL_SetRenderDrawColor(ren, 64, 160, 224, 255);
-                    break;
-                case TerrainType::Ocean:
-                default:
-                    SDL_SetRenderDrawColor(ren, 0, 96, 192, 255);
-                    break;
-            }
-            SDL_Rect rect{map.x(r) * tileSize, map.y(r) * tileSize,
-                          tileSize, tileSize};
-            SDL_RenderFillRect(ren, &rect);
-        }
-        SDL_RenderPresent(ren);
-    };
+    MapView view(map, windowWidth, windowHeight, 2);
+    view.render(ren);
 
     bool quit = false;
     SDL_Event e;
-    drawMap();
     while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
                 quit = true;
+            } else if (e.type == SDL_KEYDOWN) {
+                switch (e.key.keysym.sym) {
+                    case SDLK_EQUALS:
+                    case SDLK_PLUS:
+                        view.zoom(1);
+                        break;
+                    case SDLK_MINUS:
+                        view.zoom(-1);
+                        break;
+                    case SDLK_UP:
+                        view.pan(0, -1);
+                        break;
+                    case SDLK_DOWN:
+                        view.pan(0, 1);
+                        break;
+                    case SDLK_LEFT:
+                        view.pan(-1, 0);
+                        break;
+                    case SDLK_RIGHT:
+                        view.pan(1, 0);
+                        break;
+                }
             }
         }
+        view.render(ren);
         SDL_Delay(16);
     }
 

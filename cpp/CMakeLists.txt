@@ -14,5 +14,4 @@ add_executable(OpenFrontPrototype
     src/MapLoader.cpp
 )
 
-
 target_link_libraries(OpenFrontPrototype SDL2::SDL2)

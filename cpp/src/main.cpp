@@ -9,7 +9,15 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    GameMap map = GameMap::loadFromBin("../resources/maps/PangaeaMini.bin");
+    // When running from the cpp/build directory the project root is two levels
+    // up, so load the binary map relative to that location. Using a fixed
+    // relative path keeps things simple for this prototype.
+    const char* mapPath = "../../resources/maps/PangaeaMini.bin";
+    if (argc > 1) {
+        mapPath = argv[1];
+    }
+
+    GameMap map = GameMap::loadFromBin(mapPath);
 
     const int tileSize = 2;
     int windowWidth = map.width() * tileSize;

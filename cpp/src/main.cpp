@@ -17,8 +17,6 @@ int main(int argc, char* argv[]) {
     SDL_Window* win = SDL_CreateWindow("OpenFront Prototype", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
 
     if (!win) {
-=======
-
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return 1;
@@ -27,9 +25,6 @@ int main(int argc, char* argv[]) {
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (!ren) {
-
-
-
         SDL_DestroyWindow(win);
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
         SDL_Quit();

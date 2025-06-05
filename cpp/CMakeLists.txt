@@ -12,6 +12,8 @@ add_executable(OpenFrontPrototype
     src/Army.cpp
     src/Pathfinder.cpp
     src/MapLoader.cpp
+    src/GameMap.cpp
+    src/GameMapLoader.cpp
 )
 
 
